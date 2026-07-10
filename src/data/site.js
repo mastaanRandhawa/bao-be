@@ -33,9 +33,11 @@ export const mapEmbedUrl =
   'https://www.google.com/maps?q=163+Keefer+Street,+Vancouver,+BC&output=embed';
 
 // Self-hosted full-resolution originals downloaded from the current site.
+const assetBase = import.meta.env.BASE_URL;
+
 export const assets = {
-  logo: '/images/logo.png',
-  hero: '/images/hero.jpg',
+  logo: `${assetBase}images/logo.png`,
+  hero: `${assetBase}images/hero.jpg`,
 };
 
 export const hours = [
