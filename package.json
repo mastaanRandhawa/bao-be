@@ -5,8 +5,11 @@
   "type": "module",
   "description": "Bao Bei Chinese Brasserie — website redesign",
   "scripts": {
+    "predev": "node scripts/use-dev-index.mjs",
     "dev": "vite",
+    "prebuild": "node scripts/use-dev-index.mjs",
     "build": "vite build",
+    "postbuild": "node scripts/sync-pages-assets.mjs",
     "preview": "vite preview",
     "lint": "eslint ."
   },

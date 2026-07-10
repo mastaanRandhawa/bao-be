@@ -19,3 +19,5 @@ home-mobile.png
 .claude
 
 # Keep public assets (logo, hero) tracked — do not ignore public/
+# docs/, assets/, images/, index.html, 404.html at repo root are committed
+# production builds for GitHub Pages (updated by CI postbuild sync)

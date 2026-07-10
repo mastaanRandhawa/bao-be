@@ -27,23 +27,22 @@ npm run preview  # preview the production build
 Every push to `main` runs [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which:
 
 1. Builds the Vite app with base path `/bao-be/`
-2. Deploys via **GitHub Actions** (preferred)
-3. Commits the same build to the **`docs/`** folder (fallback if branch deploy is used)
+2. Syncs the build to **`docs/`**, **`assets/`**, **`images/`**, and root **`index.html`** / **`404.html`**
+3. Deploys via **GitHub Actions** (preferred)
 
-### If you see a blank white page
+The site works with **any** of these Pages sources:
 
-GitHub Pages is serving the **source** `index.html` (which references `/src/main.jsx`) instead of the **built** site.
+| Source | Settings |
+|--------|----------|
+| **GitHub Actions** (best) | Settings → Pages → Source: **GitHub Actions** |
+| **main / docs** | Branch: `main`, Folder: `/docs` |
+| **main / (root)** | Branch: `main`, Folder: `/ (root)` — now works because root `index.html` is the built file |
 
-**Fix — pick one in [Settings → Pages](https://github.com/mastaanRandhawa/bao-be/settings/pages):**
+### If you still see a blank white page
 
-| Option | Source | Branch | Folder |
-|--------|--------|--------|--------|
-| **A (recommended)** | GitHub Actions | — | — |
-| **B (fallback)** | Deploy from a branch | `main` | `/docs` |
-
-**Do not** use `main` + `/ (root)` — that only publishes source files and causes a blank page.
-
-After saving, wait 1–2 minutes and hard-refresh (`Ctrl+Shift+R`).
+1. **Use the correct URL:** [https://mastaanrandhawa.github.io/bao-be/](https://mastaanrandhawa.github.io/bao-be/) — **`/bao-bei/` does not exist** (404).
+2. Hard-refresh: `Ctrl+Shift+R` (clears cached broken HTML).
+3. Confirm Pages source is one of the options above (not an old `gh-pages` branch).
 
 ### Local production build (matches GitHub Pages)
 
@@ -69,7 +68,11 @@ src/
 ├── pages/          # One component per route
 ├── App.jsx         # Route table
 └── main.jsx        # Entry point
-docs/               # Pre-built site for GitHub Pages branch deploy (auto-updated by CI)
+docs/               # Pre-built site for GitHub Pages (auto-updated by CI)
+assets/             # Built JS/CSS at repo root (main/root Pages fallback)
+images/             # Built static images at repo root
+index.dev.html      # Vite dev entry — copied to index.html before dev/build
+scripts/            # use-dev-index.mjs, sync-pages-assets.mjs
 ```
 
 ## Design tokens

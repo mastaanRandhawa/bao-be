@@ -5,6 +5,11 @@ on:
     branches: [main]
     paths-ignore:
       - 'docs/**'
+      - 'assets/**'
+      - 'images/**'
+      - 'index.html'
+      - '404.html'
+      - '.nojekyll'
       - 'README.md'
   workflow_dispatch:
 
@@ -43,16 +48,17 @@ jobs:
         with:
           path: dist
 
-      - name: Sync docs folder (branch-deploy fallback)
-        run: |
-          rm -rf docs
-          cp -r dist docs
-
-      - name: Commit docs folder
+      - name: Commit built site (branch-deploy + main/root fallback)
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'chore: deploy site to docs [skip ci]'
-          file_pattern: 'docs/**'
+          commit_message: 'chore: sync GitHub Pages build [skip ci]'
+          file_pattern: |
+            docs/**
+            assets/**
+            images/**
+            index.html
+            404.html
+            .nojekyll
 
   deploy:
     needs: build
@@ -66,16 +72,14 @@ jobs:
         continue-on-error: true
         with:
           script: |
-            const { owner, repo } = context.repo;
             try {
               await github.rest.repos.updateInformationAboutPagesSite({
-                owner,
-                repo,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
                 build_type: 'workflow',
               });
-              core.info('Pages build_type set to workflow');
             } catch (error) {
-              core.warning(`Could not set Pages to workflow: ${error.message}`);
+              core.warning(`Pages workflow config: ${error.message}`);
             }
 
       - name: Deploy to GitHub Pages
