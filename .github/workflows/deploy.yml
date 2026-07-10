@@ -3,17 +3,22 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - 'README.md'
   workflow_dispatch:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,8 +38,46 @@ jobs:
         env:
           GITHUB_ACTIONS: true
 
-      - name: Deploy to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          path: dist
+
+      - name: Sync docs folder (branch-deploy fallback)
+        run: |
+          rm -rf docs
+          cp -r dist docs
+
+      - name: Commit docs folder
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: deploy site to docs [skip ci]'
+          file_pattern: 'docs/**'
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Set Pages source to GitHub Actions
+        uses: actions/github-script@v7
+        continue-on-error: true
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            try {
+              await github.rest.repos.updateInformationAboutPagesSite({
+                owner,
+                repo,
+                build_type: 'workflow',
+              });
+              core.info('Pages build_type set to workflow');
+            } catch (error) {
+              core.warning(`Could not set Pages to workflow: ${error.message}`);
+            }
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

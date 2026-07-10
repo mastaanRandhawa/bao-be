@@ -22,28 +22,38 @@ npm run preview  # preview the production build
 ## GitHub Pages
 
 **Live URL:** [https://mastaanrandhawa.github.io/bao-be/](https://mastaanrandhawa.github.io/bao-be/)  
-(Note: the path is `/bao-be/`, not `/bao-bei/`.)
+(The path is `/bao-be/` — not `/bao-bei/`.)
 
-On every push to `main`, [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) builds the site and publishes `dist/` to the **`gh-pages`** branch.
+Every push to `main` runs [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which:
 
-### Repo settings (required once)
+1. Builds the Vite app with base path `/bao-be/`
+2. Deploys via **GitHub Actions** (preferred)
+3. Commits the same build to the **`docs/`** folder (fallback if branch deploy is used)
 
-1. Open **Settings → Pages** on GitHub.
-2. Under **Build and deployment → Source**, choose **Deploy from a branch**.
-3. Set **Branch** to **`gh-pages`** / **`/ (root)`**, then Save.
-4. Wait ~1 minute after the workflow finishes, then hard-refresh the site.
+### If you see a blank white page
 
-Do **not** deploy from the `main` branch root — that serves the raw Vite source (`/src/main.jsx`) and produces a blank page.
+GitHub Pages is serving the **source** `index.html` (which references `/src/main.jsx`) instead of the **built** site.
+
+**Fix — pick one in [Settings → Pages](https://github.com/mastaanRandhawa/bao-be/settings/pages):**
+
+| Option | Source | Branch | Folder |
+|--------|--------|--------|--------|
+| **A (recommended)** | GitHub Actions | — | — |
+| **B (fallback)** | Deploy from a branch | `main` | `/docs` |
+
+**Do not** use `main` + `/ (root)` — that only publishes source files and causes a blank page.
+
+After saving, wait 1–2 minutes and hard-refresh (`Ctrl+Shift+R`).
+
+### Local production build (matches GitHub Pages)
 
 ```bash
 # PowerShell
-$env:GITHUB_PAGES='true'; npm run build; npm run preview
+$env:GITHUB_ACTIONS='true'; npm run build; npm run preview
 
 # bash
-GITHUB_PAGES=true npm run build && npm run preview
+GITHUB_ACTIONS=true npm run build && npm run preview
 ```
-
-Client-side routes (`/menus`, `/about`, etc.) work on GitHub Pages via a generated `404.html` SPA fallback.
 
 ## Project structure
 
@@ -51,6 +61,7 @@ Client-side routes (`/menus`, `/about`, etc.) work on GitHub Pages via a generat
 src/
 ├── components/
 │   ├── layout/     # Navbar, Footer, Layout shell
+│   ├── shared/     # HoursList, MapEmbed, AddressBlock
 │   ├── ui/         # Reusable primitives (Button, Logo, Accordion, …)
 │   ├── home/       # Homepage sections
 │   └── menu/       # Menu item row
@@ -58,6 +69,7 @@ src/
 ├── pages/          # One component per route
 ├── App.jsx         # Route table
 └── main.jsx        # Entry point
+docs/               # Pre-built site for GitHub Pages branch deploy (auto-updated by CI)
 ```
 
 ## Design tokens
@@ -78,3 +90,4 @@ Type: **Jost** (display, ≈ Brandon Grotesque) · **Inter** (body) · **Noto Se
 - Menu prices in `src/data/menu.js` are illustrative — sync with the current kitchen menu.
 - `NewsletterForm` needs wiring to a real email provider.
 - Reservation / gift-card links point to the live Tock pages.
+- `dist/` is gitignored (CI builds fresh). `docs/` is the committed production build for Pages.
