@@ -19,6 +19,30 @@ npm run build    # production build → dist/
 npm run preview  # preview the production build
 ```
 
+## GitHub Pages
+
+The site deploys automatically on every push to `main` via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
+
+**Live URL:** [https://mastaanrandhawa.github.io/bao-be/](https://mastaanrandhawa.github.io/bao-be/)
+
+### First-time setup (repo settings)
+
+1. Open **Settings → Pages** on GitHub.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions** (not “Deploy from a branch”).
+3. Push to `main` — the workflow builds with base path `/bao-be/` and publishes `dist/`.
+
+### Local production build (matches GitHub Pages)
+
+```bash
+# PowerShell
+$env:GITHUB_PAGES='true'; npm run build; npm run preview
+
+# bash
+GITHUB_PAGES=true npm run build && npm run preview
+```
+
+Client-side routes (`/menus`, `/about`, etc.) work on GitHub Pages via a generated `404.html` SPA fallback.
+
 ## Project structure
 
 ```
