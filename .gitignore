@@ -1,0 +1,19 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# Playwright audit artifacts
+.playwright-mcp
+home-full.png
+home-viewport.png
+home-mobile.png
+
+.agents
+.claude

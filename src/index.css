@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream font-body text-ink-soft antialiased;
+  }
+
+  /* Display serif headings for a refined, high-end brasserie feel */
+  h1,
+  h2,
+  h3 {
+    @apply font-serif text-ink;
+  }
+
+  ::selection {
+    @apply bg-seal text-cream;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply font-display text-xs uppercase tracking-brand text-seal;
+  }
+
+  /* Elegant serif display heading utility */
+  .display-title {
+    @apply font-serif font-normal leading-[1.05] tracking-tight text-ink;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center font-display text-sm uppercase tracking-wide
+           transition-all duration-300 ease-out-expo focus:outline-none focus-visible:ring-2
+           focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
+  }
+
+  .container-content {
+    @apply mx-auto w-full max-w-content px-6 sm:px-8;
+  }
+
+  /* Animated underline for text links */
+  .link-underline {
+    @apply relative inline-block;
+  }
+  .link-underline::after {
+    content: '';
+    @apply absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-current
+           transition-transform duration-300 ease-out-expo;
+  }
+  .link-underline:hover::after {
+    @apply origin-left scale-x-100;
+  }
+}
+
+@layer utilities {
+  /* Scroll-reveal: hidden until .is-visible is added by IntersectionObserver */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
