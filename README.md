@@ -21,17 +21,19 @@ npm run preview  # preview the production build
 
 ## GitHub Pages
 
-The site deploys automatically on every push to `main` via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
+**Live URL:** [https://mastaanrandhawa.github.io/bao-be/](https://mastaanrandhawa.github.io/bao-be/)  
+(Note: the path is `/bao-be/`, not `/bao-bei/`.)
 
-**Live URL:** [https://mastaanrandhawa.github.io/bao-be/](https://mastaanrandhawa.github.io/bao-be/)
+On every push to `main`, [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) builds the site and publishes `dist/` to the **`gh-pages`** branch.
 
-### First-time setup (repo settings)
+### Repo settings (required once)
 
 1. Open **Settings → Pages** on GitHub.
-2. Under **Build and deployment**, set **Source** to **GitHub Actions** (not “Deploy from a branch”).
-3. Push to `main` — the workflow builds with base path `/bao-be/` and publishes `dist/`.
+2. Under **Build and deployment → Source**, choose **Deploy from a branch**.
+3. Set **Branch** to **`gh-pages`** / **`/ (root)`**, then Save.
+4. Wait ~1 minute after the workflow finishes, then hard-refresh the site.
 
-### Local production build (matches GitHub Pages)
+Do **not** deploy from the `main` branch root — that serves the raw Vite source (`/src/main.jsx`) and produces a blank page.
 
 ```bash
 # PowerShell
