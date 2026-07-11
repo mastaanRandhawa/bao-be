@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PageHeader from '../components/ui/PageHeader';
 import MenuItem from '../components/menu/MenuItem';
 import Button from '../components/ui/Button';
-import { foodMenu, drinkMenu, dietaryLegend } from '../data/menu';
+import { foodMenu, drinkMenu, dietaryLegend, menuNotes } from '../data/menu';
 import { externalLinks } from '../data/site';
 
 const TABS = [
@@ -56,6 +56,11 @@ export default function MenusPage() {
               <div key={section.id} className="break-inside-avoid">
                 <h2 className="mb-2 border-b border-ink/15 pb-3 font-display text-sm uppercase tracking-brand text-seal">
                   {section.title}
+                  {section.subtitle && (
+                    <span className="mt-1 block font-body text-[0.65rem] normal-case tracking-normal text-ink-muted">
+                      {section.subtitle}
+                    </span>
+                  )}
                 </h2>
                 <div className="divide-y divide-ink/10">
                   {section.items.map((item) => (
@@ -79,6 +84,11 @@ export default function MenusPage() {
               Please let us know about allergies — many Chinese condiments contain traces of peanuts,
               and soy sauce is fermented with wheat.
             </p>
+            {(activeId === 'food' ? menuNotes.food : menuNotes.drinks).map((note) => (
+              <p key={note} className="mt-2 text-xs text-ink-muted">
+                {note}
+              </p>
+            ))}
           </div>
 
           <div className="mt-12 text-center">

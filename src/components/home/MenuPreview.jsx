@@ -5,7 +5,7 @@ import Reveal from '../ui/Reveal';
 import { foodMenu } from '../../data/menu';
 
 // Show a couple of highlight sections on the homepage; full menu lives on /menus.
-const highlights = foodMenu.filter((s) => ['to-start', 'dumplings'].includes(s.id));
+const highlights = foodMenu.filter((s) => ['schnacks', 'petits-cadeaux'].includes(s.id));
 
 export default function MenuPreview() {
   return (
@@ -22,6 +22,11 @@ export default function MenuPreview() {
             <Reveal key={section.id} delay={i * 120}>
               <h3 className="mb-3 border-b border-ink/15 pb-3 font-display text-sm uppercase tracking-brand text-seal">
                 {section.title}
+                {section.subtitle && (
+                  <span className="mt-1 block font-body text-[0.65rem] normal-case tracking-normal text-ink-muted">
+                    {section.subtitle}
+                  </span>
+                )}
               </h3>
               <div className="divide-y divide-ink/10">
                 {section.items.map((item) => (

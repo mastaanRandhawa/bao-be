@@ -87,7 +87,7 @@ Type: **Jost** (display, ≈ Brandon Grotesque) · **Inter** (body) · **Noto Se
 
 ## Notes for launch
 
-- Menu prices in `src/data/menu.js` are illustrative — sync with the current kitchen menu.
+- Menu data in `src/data/menu.js` is synced from the live bao-bei.ca PDFs — re-check when the kitchen updates menus.
 - `NewsletterForm` needs wiring to a real email provider.
 - Reservation / gift-card links point to the live Tock pages.
 - `dist/` is gitignored (CI builds fresh). `docs/` is the committed production build for Pages.
