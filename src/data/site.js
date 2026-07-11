@@ -38,6 +38,7 @@ const assetBase = import.meta.env.BASE_URL;
 export const assets = {
   logo: `${assetBase}images/logo.png`,
   hero: `${assetBase}images/hero.jpg`,
+  heroHome: `${assetBase}images/hero-home.webp`,
 };
 
 export const hours = [

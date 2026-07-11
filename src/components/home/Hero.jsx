@@ -6,8 +6,8 @@ export default function Hero() {
     <section className="relative isolate overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <img
-          src={assets.hero}
-          alt="Bao Bei still life — lotus root, cleaver, kabocha squash and flowers"
+          src={assets.heroHome}
+          alt="Bao Bei Chinese Brasserie — dining room photograph by Christopher Flett"
           className="h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/45 to-ink/25" />
