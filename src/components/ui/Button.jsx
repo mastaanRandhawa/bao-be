@@ -8,6 +8,9 @@ const VARIANTS = {
   seal: `bg-seal text-cream shadow-md hover:bg-seal-dark ${BASE_LIFT} focus-visible:ring-seal`,
   outline:
     'border border-ink/30 text-ink hover:border-ink hover:bg-ink hover:text-cream focus-visible:ring-ink',
+  // For dark surfaces — avoids fighting outline’s ink colors via className (Tailwind source order).
+  outlineOnDark:
+    'border border-cream/40 text-cream hover:border-cream hover:bg-cream hover:text-ink focus-visible:ring-cream',
   ghost: 'text-ink hover:text-seal focus-visible:ring-seal',
 };
 

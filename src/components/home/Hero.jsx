@@ -43,12 +43,7 @@ export default function Hero() {
             <Button href={externalLinks.reservations} variant="seal" size="lg">
               Reserve a Table
             </Button>
-            <Button
-              to="/menus"
-              variant="outline"
-              size="lg"
-              className="border-cream/40 text-cream hover:bg-cream hover:text-ink"
-            >
+            <Button to="/menus" variant="outlineOnDark" size="lg">
               View Menu
             </Button>
           </div>

@@ -37,12 +37,7 @@ export default function FamilyTableCta() {
           <Button href={externalLinks.familyTable} variant="seal" size="lg">
             Book the Family Table
           </Button>
-          <Button
-            to="/family-table"
-            variant="outline"
-            size="lg"
-            className="border-cream/40 text-cream hover:bg-cream hover:text-ink"
-          >
+          <Button to="/family-table" variant="outlineOnDark" size="lg">
             Learn More
           </Button>
         </Reveal>
