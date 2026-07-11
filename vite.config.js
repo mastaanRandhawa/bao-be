@@ -3,10 +3,9 @@ import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+// Always build for GitHub Pages (/bao-be/). A root-base build breaks asset URLs on deploy.
 const repo = 'bao-be';
-const isGitHubPages =
-  process.env.GITHUB_PAGES === 'true' || process.env.GITHUB_ACTIONS === 'true';
-const base = isGitHubPages ? `/${repo}/` : '/';
+const base = `/${repo}/`;
 
 /** Copy index.html → 404.html so client-side routes work on GitHub Pages. */
 function spaFallback() {

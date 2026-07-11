@@ -47,11 +47,8 @@ The site works with **any** of these Pages sources:
 ### Local production build (matches GitHub Pages)
 
 ```bash
-# PowerShell
-$env:GITHUB_ACTIONS='true'; npm run build; npm run preview
-
-# bash
-GITHUB_ACTIONS=true npm run build && npm run preview
+npm run build    # production build → dist/ (always uses /bao-be/ base path)
+npm run preview  # preview at http://localhost:4173/bao-be/
 ```
 
 ## Project structure
